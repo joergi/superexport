@@ -1,4 +1,12 @@
-# superexport
+ _____                       _____                      _   
+/  ___|                     |  ___|                    | |  
+\ `--. _   _ _ __   ___ _ __| |____  ___ __   ___  _ __| |_
+`--. \ | | | '_ \ / _ \ '__|  __\ \/ / '_ \ / _ \| '__| __|
+/\__/ / |_| | |_) |  __/ |  | |___>  <| |_) | (_) | |  | |_
+\____/ \__,_| .__/ \___|_|  \____/_/\_\ .__/ \___/|_|   \__|
+| |                       | |                   
+|_|                       |_|
+
 sick of exporting everytime again and again the secrets from vault? this is (hopefully your solution)
 
 before you start:  
