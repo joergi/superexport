@@ -13,7 +13,6 @@
 # feel free to change this
 superexportfolder=/home/$(whoami)/.superexport
 
-
 #######################
 # check the variables #
 #######################
@@ -75,16 +74,11 @@ if [ ! -f $superexportfolder/.exported.sh ]; then
 fi
 
 echo -e $export >> $superexportfolder/.exported.sh
-#bash $superexportfolder/.exported.sh
+bash $superexportfolder/.exported.sh
 
 ####################################
 # reading passwords out of secrets #
 ####################################
 
-if [ ! -f $superexportfolder/.secretreader.sh ]; then
- echo "#!/bin/bash" > $superexportfolder/.secretreader.sh
- chmod +x $superexportfolder/.secretreader.sh
-fi
-
 secretreader="export $1=\$(secret-tool lookup \$USER $secretname)"
-echo -e $secretreader >> $superexportfolder/.secretreader.sh
+echo -e $secretreader >> ~/.bashrc

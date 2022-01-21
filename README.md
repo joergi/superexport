@@ -1,25 +1,23 @@
- _____                       _____                      _   
-/  ___|                     |  ___|                    | |  
-\ `--. _   _ _ __   ___ _ __| |____  ___ __   ___  _ __| |_
-`--. \ | | | '_ \ / _ \ '__|  __\ \/ / '_ \ / _ \| '__| __|
-/\__/ / |_| | |_) |  __/ |  | |___>  <| |_) | (_) | |  | |_
-\____/ \__,_| .__/ \___|_|  \____/_/\_\ .__/ \___/|_|   \__|
-| |                       | |                   
-|_|                       |_|
-
+# SUPEREXPORT
 sick of exporting everytime again and again the secrets from vault? this is (hopefully your solution)
+
+## USE of YOUR own RISK
 
 before you start:  
 add this to `.bashrc`:
 ```bash
 alias superexport="bash path/to/this/folder/superexport.sh"
 ```
+you can now run it like:
 
-also add the `.secretreader.sh` to your `.bashrc`  
 ```bash
-source /home/$USERNAME/.superexport/.secretreader.sh
+superexporter EXPORTED_USERNME variable_from_vault company/path/to/vault/project/ some-variable-to-make-it-unique
 ```
-you can get your username with `whoami` on the commandline
+
+
+## WARNING:  
+please be aware that this script will add some export lines to your `.bashrc`
+
 
 
 the idea came while I was using a script from a colleague at work - but I was sick of adding them manually to the script 
