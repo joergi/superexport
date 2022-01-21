@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # _____                       _____                      _
 #/  ___|                     |  ___|                    | |
 #\ `--. _   _ _ __   ___ _ __| |____  ___ __   ___  _ __| |_
@@ -9,6 +8,8 @@
 #            | |                       | |
 #            |_|                       |_|
 
+set -euo pipefail
+IFS=$'\n\t'
 
 # feel free to change this
 superexportfolder=/home/$(whoami)/.superexport
@@ -70,6 +71,11 @@ export+="\n"
 ###########################
 if [ ! -f $superexportfolder/.exported.sh ]; then
  echo "#!/bin/bash" > $superexportfolder/.exported.sh
+ echo "set -euo pipefail" >> $superexportfolder/.exported.sh
+ echo "IFS=\$'\n\t'" >> $superexportfolder/.exported.sh
+ newlines="\n"
+ echo -e $newlines >> $superexportfolder/.exported.sh
+
  chmod +x $superexportfolder/.exported.sh
 fi
 

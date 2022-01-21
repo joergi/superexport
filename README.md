@@ -14,6 +14,10 @@ you can now run it like:
 superexporter EXPORTED_USERNME variable_from_vault company/path/to/vault/project/ some-variable-to-make-it-unique
 ```
 
+to see that it worked, YOU HAVE TO OPEN A NEW TERMINAL
+```bash 
+echo $EXPORTED_USERNME
+``
 
 ## WARNING:  
 please be aware that this script will add some export lines to your `.bashrc`
