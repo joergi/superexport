@@ -1,5 +1,5 @@
 # SUPEREXPORT
-sick of exporting everytime again and again the secrets from vault? this is (hopefully your solution)
+sick of exporting everytime again and again the secrets from vault? this is (hopefully) your solution
 
 ## USE of YOUR own RISK
 
