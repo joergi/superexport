@@ -1,17 +1,18 @@
-# SUPEREXPORT
-sick of exporting everytime again and again the secrets from vault? this is (hopefully) your solution
+# SUPEREXPORT - a permanent vault export
+Sick of exporting everytime again and again the secrets from vault? this is (hopefully) your solution
 
-## USE of YOUR own RISK
+## USE at YOUR own RISK ! ! !
 
 before you start:  
-add this to `.bashrc`:
+add this to your `.bashrc`:
+
 ```bash
 alias superexport="bash path/to/this/folder/superexport.sh"
 ```
 you can now run it like:
 
 
-also add the `.secretreader.sh` to your `.bashrc`    
+also add the this line to your `.bashrc`, so the `.secretreader.sh` is read with every new terminal
 ```bash
 source /home/$USERNAME/.superexport/.secretreader.sh
 ```
