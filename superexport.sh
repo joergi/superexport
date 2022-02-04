@@ -86,5 +86,11 @@ bash $superexportfolder/.exported.sh
 # reading passwords out of secrets #
 ####################################
 
+if [ ! -f $superexportfolder/.secretreader.sh ]; then
+ echo "#!/bin/bash" > $superexportfolder/.secretreader.sh
+ chmod +x $superexportfolder/.secretreader.sh
+fi
+
 secretreader="export $1=\$(secret-tool lookup \$USER $secretname)"
-echo -e $secretreader >> ~/.bashrc
+echo -e $secretreader >> $superexportfolder/.secretreader.sh
+

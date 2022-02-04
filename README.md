@@ -10,18 +10,15 @@ alias superexport="bash path/to/this/folder/superexport.sh"
 ```
 you can now run it like:
 
+
+also add the `.secretreader.sh` to your `.bashrc`    
 ```bash
-superexporter EXPORTED_USERNME variable_from_vault company/path/to/vault/project/ some-variable-to-make-it-unique
+source /home/$USERNAME/.superexport/.secretreader.sh
 ```
 
 to see that it worked, YOU HAVE TO OPEN A NEW TERMINAL
 ```bash 
 echo $EXPORTED_USERNME
 ```
-
-## WARNING:  
-please be aware that this script will add some export lines to your `.bashrc`
-
-
 
 the idea came while I was using a script from a colleague at work - but I was sick of adding them manually to the script 
