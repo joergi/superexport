@@ -19,6 +19,10 @@ jobs:
           echo "echo is done"
           sudo apt-get update && sudo apt-get install vault
       - name: verifying vault
-        run: vault
+        run: vault status
+      - name: Run docker-compose
+        uses: hoverkraft-tech/compose-action@v2
+        with:
+          compose-file: "./vault-docker/docker-compose.yml"
 
 
