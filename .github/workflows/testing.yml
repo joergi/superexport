@@ -7,7 +7,7 @@ jobs:
   bash-linux:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout
+      - uses: actions/checkout@v4
       - name: install vault-cli
         run: \
           apt update && apt install gpg wget
