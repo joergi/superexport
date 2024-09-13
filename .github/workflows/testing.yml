@@ -34,5 +34,6 @@ jobs:
           export VAULT_ADDR=http://127.0.0.1:8200
           echo "vault status"
           vault status
-          echo "done"
+          export MYKEY=$(vault kv get -field=MY_PASSWORD /secrets/my-secrets)
+          echo $MKEY
 
