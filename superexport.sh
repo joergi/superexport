@@ -142,6 +142,13 @@ if [ ! -f $superexportfolder/.secretreader.sh ]; then
  chmod +x $superexportfolder/.secretreader.sh
 fi
 
-secretreader="export $1=\$(secret-tool lookup \$USER $secretname)"
+if [[ "$(uname)" == 'Darwin' ]]; then
+  echo "mac unten"
+  secretreader="export $1=\$(launchctl setenv \$secretname \"$secretname\")"
+elif [[ "$(uname)" == 'Linux' ]]; then
+  echo "linux unten"
+  secretreader="export $1=\$(secret-tool lookup \$USER $secretname)"
+fi
+
 echo -e $secretreader >> $superexportfolder/.secretreader.sh
 
