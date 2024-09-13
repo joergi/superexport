@@ -37,6 +37,9 @@ jobs:
           echo "login to vault"
           vault login token=vault-plaintext-root-token
           vault status
+          echo "after vault status"
           export MYKEY=$(vault kv get -field=password /my-secrets/dev)
-          echo $MKEY
+          echo "after export"
+          echo "MKEY = $MKEY"
+          
 
