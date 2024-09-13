@@ -28,7 +28,11 @@ jobs:
           echo "Waiting for Vault to start..."
           sleep 60
           docker ps
+          echo "docker images"
           docker images
+          echo "export vault addr"
           export VAULT_ADDR=http://127.0.0.1:8200
+          echo "vault status"
           vault status
+          echo "done"
 
