@@ -19,7 +19,7 @@ alias superexport="bash path/to/this/folder/superexport.sh"
 
 also add this line to your `.bashrc`, so the `.secretreader.sh` is read with every new terminal
 ```bash
-source /home/$USERNAME/.superexport/.secretreader.sh
+source $HOME/.superexport/.secretreader.sh
 ```
 
 ### Run it

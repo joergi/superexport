@@ -12,7 +12,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 # feel free to change this
-superexportfolder=/home/$(whoami)/.superexport
+superexportfolder=$HOME/.superexport
 
 #######################
 # check the variables #
@@ -98,9 +98,23 @@ secretname=$4-$secretname
 ###########################################################
 # get variables out of vault and export it to the secrets #
 ###########################################################
+echo "hallo"
 export="export $1=\$(vault kv get -field=$2 \"$3\")"
 export+="\n"
-export+="echo \$$1 | secret-tool store --label=\"\$USER $secretname\" \$USER $secretname"
+
+if [[ "$(uname)" == 'Darwin' ]]; then
+  if security find-generic-password -a "$USER" -s $secretname -w >/dev/null 2>&1; then
+    echo "mac 1"
+    export+="echo \$$1 | security delete-generic-password -a \"$USER\" -s $secretname >/dev/null 2>&1"
+  fi
+  echo "after mac1"
+  export+="echo \$$1 | security add-generic-password -a \"$USER\" -s $secretname -w \"$secretname\""
+elif [[ "$(uname)" == 'Linux' ]]; then
+  echo "linux"
+  export+="echo \$$1 | secret-tool store --label=\"\$USER $secretname\" \$USER $secretname"
+fi
+echo "after"
+
 export+="\n"
 
 ###########################
