@@ -19,10 +19,12 @@ jobs:
           echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
           echo "echo is done"
           sudo apt-get update && sudo apt-get install vault
-      - name: Run docker-compose
-        uses: hoverkraft-tech/compose-action@v2.0.1
-        with:
-          compose-file: "./vault-docker/docker-compose.yml"
+      - name: RUn docker-compose
+        run: docker compose -f ./vault-docker/docker-compose.yml up
+#      - name: Run docker-compose
+#        uses: hoverkraft-tech/compose-action@v2.0.1
+#        with:
+#          compose-file: "./vault-docker/docker-compose.yml"
       - name: verifying vault
         run: |
           docker ps
