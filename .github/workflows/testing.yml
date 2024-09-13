@@ -43,8 +43,8 @@ jobs:
           echo $(vault kv get -field=password /my-secrets/dev)
           echo "after printing vault" 
           echo "MKEY" + $MYKEY
-          ll
+          ls -lah
       - name: ll
         run: |
           echo "MKEY" + $MYKEY
-          ll
+          ls -lah
