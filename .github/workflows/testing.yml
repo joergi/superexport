@@ -20,7 +20,7 @@ jobs:
           echo "echo is done"
           sudo apt-get update && sudo apt-get install vault
       - name: RUn docker-compose
-        run: docker compose -f ./vault-docker/docker-compose.yml up
+        run: docker compose -f ./vault-docker/docker-compose.yml up -d
 #      - name: Run docker-compose
 #        uses: hoverkraft-tech/compose-action@v2.0.1
 #        with:
