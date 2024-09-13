@@ -44,7 +44,4 @@ jobs:
           echo "after printing vault" 
           echo "MKEY" + $MYKEY
           ls -lah
-      - name: ll
-        run: |
-          echo "MKEY" + $MYKEY
-          ls -lah
+          pwd
