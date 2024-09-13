@@ -4,6 +4,9 @@ on:
     branches: [ main ]
   workflow_dispatch: {}
 
+env:
+  VAULT_ADDR: http://127.0.0.1:8200
+
 jobs:
   bash-linux:
     runs-on: ubuntu-latest
@@ -30,13 +33,13 @@ jobs:
           docker ps
           echo "docker images"
           docker images
-          echo "export vault addr"
-          export VAULT_ADDR=http://127.0.0.1:8200
+#          echo "export vault addr"
+#          export VAULT_ADDR=http://127.0.0.1:8200
           echo "vault status"
           vault status
           echo "login to vault"
           vault login token=vault-plaintext-root-token
           vault status
-          export MYKEY=$(vault kv get -field=MY_PASSWORD /secrets/my-secrets)
+          export MYKEY=$(vault kv get -field=password /my-secrets/dev)
           echo $MKEY
 

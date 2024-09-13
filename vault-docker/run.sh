@@ -11,7 +11,7 @@ done
 echo "Authenticating to vault..."
 vault login token=vault-plaintext-root-token
 echo "Initializing vault..."
-vault secrets enable -version=2 -path=my-secrets kv
+vault secrets enable -version=1 -path=my-secrets kv
 echo "Adding entries..."
 vault kv put my-secrets/dev username=test_user
 vault kv put my-secrets/dev password=test_password
