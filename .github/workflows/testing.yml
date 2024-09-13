@@ -42,6 +42,6 @@ jobs:
           echo "after export"
           echo $(vault kv get -field=password /my-secrets/dev)
           echo "after printing vault" 
-          echo "MKEY" + $MKEY
+          echo "MKEY" + $MYKEY
           
 
