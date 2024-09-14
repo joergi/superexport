@@ -26,38 +26,34 @@ jobs:
       - name: verifying vault
         run: |
           echo "Waiting for Vault to start..."
-          sleep 60
+          sleep 30
           docker ps
           echo "docker images"
           export $(dbus-launch)
           eval "$(echo '\n' | gnome-keyring-daemon --unlock)"
-          docker images
-          echo "export vault addr"
           export VAULT_ADDR=http://127.0.0.1:8200
           echo "vault status"
           vault status
           echo "login to vault"
           vault login token=vault-plaintext-root-token
-          vault status
-          echo "after vault status"
           mkdir $HOME/.superexport
 
           touch $HOME/.superexport/.exported.sh
           chmod +x $HOME/.superexport/.exported.sh
           chmod +x superexport.sh
           ./superexport.sh MYKEY password /my-secrets/dev foo
-          echo "after export"
+         
+          echo "reading secrets from from secret tools"
           source $HOME/.superexport/.secretreader.sh
-
-          env
-          echo "after printing vault" 
-          echo "MKEY" + $MYKEY
           echo "GH_ENV=$MYKEY" >> $GITHUB_ENV
-          ls -lah
-          cd ..
-          ls -lah
-          pwd
-      - name: test again
+      - name: check if the password is correct
         run: |
-          echo "MKEY" + ${{ env.GH_ENV }}
+          if [ ${{ env.GH_ENV }} = "test_password" ]; then
+            echo "password is correct"
+            exit 0
+          else
+            echo "password is wrong"
+            echo "password should be test_password but was ${{ env.GH_ENV }}
+            exit 1
+          fi
           
