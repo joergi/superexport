@@ -68,7 +68,19 @@ jobs:
           set -x
           docker version
           docker run --rm hello-world
-      - name: Run docker-compose
-        run: docker compose -f ./vault-docker/docker-compose.yml up -d
       - name: brew vault
         run: brew install hashicorp/tap/vault
+      - name: Run docker-compose
+        run: docker compose -f ./vault-docker/docker-compose.yml up -d
+
+      - name: verifying vault
+        run: |
+          echo "Waiting for Vault to start..."
+          sleep 30
+          docker ps
+          echo "docker images"
+          export VAULT_ADDR=http://127.0.0.1:8200
+          echo "vault status"
+          vault status
+          echo "login to vault"
+          vault login token=vault-plaintext-root-token
