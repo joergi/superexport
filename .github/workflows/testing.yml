@@ -84,3 +84,5 @@ jobs:
           vault status
           echo "login to vault"
           vault login token=vault-plaintext-root-token
+          echo "Passwort -"
+          echo $(vault kv get -field=password "/my-secrets/dev")
