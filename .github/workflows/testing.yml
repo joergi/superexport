@@ -11,14 +11,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: install vault-cli
         run: |
-          sudo apt-get update && sudo apt-get install gpg wget gnome-keyring dbus-x11 
+          sudo apt-get update && sudo apt-get install gpg wget gnome-keyring dbus-x11 vault libsecret-tools
           wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-          echo "wget done"
           gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint
-          echo "gpg done"
           echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-          echo "echo is done"
-          sudo apt-get update && sudo apt-get install vault && sudo apt-get install libsecret-tools
 
       - name: Run docker-compose
         run: docker compose -f ./vault-docker/docker-compose.yml up -d
@@ -48,7 +44,7 @@ jobs:
           echo "GH_ENV=$MYKEY" >> $GITHUB_ENV
       - name: check if the password is correct
         run: |
-          if [ ${{ env.GH_ENV }} = "test_password" ]; then
+          if [ "${{ env.GH_ENV }}" = "test_password" ]; then
             echo "password is correct"
             exit 0
           else
