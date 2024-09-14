@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: install vault-cli
         run: |
-          sudo apt-get update && sudo apt-get install gpg wget 
+          sudo apt-get update && sudo apt-get install gpg wget gnome-keyring
           wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
           echo "wget done"
           gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint
