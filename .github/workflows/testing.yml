@@ -52,11 +52,12 @@ jobs:
           env
           echo "after printing vault" 
           echo "MKEY" + $MYKEY
+          echo "GH_ENV=$MYKEY" >> $GITHUB_ENV
           ls -lah
           cd ..
           ls -lah
           pwd
       - name: test again
         run: |
-          echo "MKEY" + $MYKEY
+          echo "MKEY" + ${{ env.GH_ENV }}
           
