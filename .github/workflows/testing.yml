@@ -45,13 +45,13 @@ jobs:
           echo "GH_ENV=$MYKEY" >> $GITHUB_ENV
       - name: check if the password is correct
         run: |
-          CHECKVAR=${{ env.GH_ENV }
+          CHECKVAR=${{ env.GH_ENV }}
           if [[ "$CHECKVAR" == "test_password" ]; then
             echo "password is correct"
             exit 0
           else
             echo "password is wrong"
-            echo "password should be test_password but was ${{ env.GH_ENV }}
+            echo "password should be test_password but was $CHECKVAR
             exit 1
           fi
           
