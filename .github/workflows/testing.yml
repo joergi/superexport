@@ -51,7 +51,7 @@ jobs:
             exit 0
           else
             echo "password is wrong"
-            echo "password should be test_password but was $CHECKVAR
+            echo "password should be test_password but was $CHECKVAR"
             exit 1
           fi
           
