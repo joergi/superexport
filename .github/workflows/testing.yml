@@ -47,7 +47,7 @@ jobs:
       - name: check if the password is correct
         run: |
           CHECKVAR="${{ env.GH_ENV }}"
-          if [ "$CHECKVAR" = "test_passwordx" ]; then
+          if [ "$CHECKVAR" = "test_password" ]; then
             echo "password is correct"
             exit 0
           else
