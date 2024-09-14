@@ -44,4 +44,6 @@ jobs:
           echo "after printing vault" 
           echo "MKEY" + $MYKEY
           ls -lah
+          cd ..
+          ls -lah
           pwd
