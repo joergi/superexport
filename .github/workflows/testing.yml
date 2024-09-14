@@ -70,3 +70,5 @@ jobs:
           docker run --rm hello-world
       - name: Run docker-compose
         run: docker compose -f ./vault-docker/docker-compose.yml up -d
+      - name: brew vault
+        run: brew install hashicorp/tap/vault
