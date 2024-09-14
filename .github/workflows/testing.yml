@@ -62,9 +62,11 @@ jobs:
 #      - name: test if docker is there
 #        run: |
 #          brew
-      - name: Set up Docker Build
-        uses: docker/setup-buildx-action@v2
-
+      - uses: docker-practice/actions-setup-docker@master
+        timeout-minutes: 12
       - run: |
+          set -x
           docker version
           docker run --rm hello-world
+      - name: Run docker-compose
+        run: docker compose -f ./vault-docker/docker-compose.yml up -d
