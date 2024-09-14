@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: install vault-cli
         run: |
-          sudo apt-get update && sudo apt-get install gpg wget gnome-keyring
+          sudo apt-get update && sudo apt-get install gpg wget gnome-keyring dbus-x11 
           wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
           echo "wget done"
           gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint
@@ -29,6 +29,8 @@ jobs:
           sleep 60
           docker ps
           echo "docker images"
+          export $(dbus-launch)
+          eval "$(echo '\n' | gnome-keyring-daemon --unlock)"
           docker images
           echo "export vault addr"
           export VAULT_ADDR=http://127.0.0.1:8200
