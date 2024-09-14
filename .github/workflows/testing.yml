@@ -47,7 +47,7 @@ jobs:
           chmod +x superexport.sh
           ./superexport.sh MYKEY password /my-secrets/dev foo
           echo "after export"
-          source HOME/.superexport/.secretreader.sh
+          source $HOME/.superexport/.secretreader.sh
 
           env
           echo "after printing vault" 
