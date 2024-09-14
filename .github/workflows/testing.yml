@@ -61,4 +61,10 @@ jobs:
       - uses: actions/checkout@v4.1.7
       - name: test if docker is there
         run: |
-          homebrew
+          brew
+      - uses: docker-practice/actions-setup-docker@master
+        timeout-minutes: 12
+      - run: |
+          set -x
+          docker version
+          docker run --rm hello-world
