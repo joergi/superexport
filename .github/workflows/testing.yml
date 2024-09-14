@@ -56,3 +56,7 @@ jobs:
           cd ..
           ls -lah
           pwd
+     - name: test again
+        run: |
+          echo "MKEY" + $MYKEY
+          
