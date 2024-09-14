@@ -38,7 +38,7 @@ jobs:
           vault login token=vault-plaintext-root-token
           vault status
           echo "after vault status"
-          mkdir HOME/.superexport
+          mkdir $HOME/.superexport
 
           touch $HOME/.superexport/.exported.sh
           chmod +x $HOME/.superexport/.exported.sh
