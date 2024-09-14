@@ -38,9 +38,14 @@ jobs:
           vault login token=vault-plaintext-root-token
           vault status
           echo "after vault status"
-          export MYKEY=$(vault kv get -field=password /my-secrets/dev)
+          touch $HOME/.superexport/.exported.sh
+          chmod +x $HOME/.superexport/.exported.sh
+          chmod +x superexport.sh
+          ./superexport.sh MYKEY password /my-secrets/dev foo
           echo "after export"
-          echo $(vault kv get -field=password /my-secrets/dev)
+          source HOME/.superexport/.secretreader.sh
+
+          env
           echo "after printing vault" 
           echo "MKEY" + $MYKEY
           ls -lah
