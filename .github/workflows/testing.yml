@@ -59,9 +59,9 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4.1.7
-      - name: test if docker is there
-        run: |
-          brew
+#      - name: test if docker is there
+#        run: |
+#          brew
       - uses: docker-practice/actions-setup-docker@master
         timeout-minutes: 12
       - run: |
