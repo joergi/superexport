@@ -86,7 +86,7 @@ jobs:
           vault login token=vault-plaintext-root-token
           echo "Passwort -"
           echo $(vault kv get -field=password "/my-secrets/dev")
-          
+          mkdir $HOME/.superexport
           touch $HOME/.superexport/.exported.sh
           chmod +x $HOME/.superexport/.exported.sh
           chmod +x superexport.sh
