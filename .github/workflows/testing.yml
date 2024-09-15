@@ -66,6 +66,14 @@ jobs:
         run: |
           brew install orbstack
           echo $PATH
+          echo $BASH_VERSINFO
+          echo $ZSH_VERSION
+          ls -l /usr/local/bin
+          ls ~/.orbstack/shell
+          ls -l ~/.orbstack/bin
+          cat ~/.zprofile 
+          cat ~/.orbstack/shell/init.zsh
+
           docker info
 #      - run: |
 #          set -x
