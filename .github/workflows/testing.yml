@@ -60,22 +60,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.7
 
-#      - uses: docker-practice/actions-setup-docker@master
-#        timeout-minutes: 12
+      - uses: docker-practice/actions-setup-docker@master
+        timeout-minutes: 12
 
-#      - run: |
-#          set -x
-#          docker version
-#          docker run --rm hello-world
+      - run: |
+          set -x
+          docker version
+
       - name: brew vault
         run: brew install hashicorp/tap/vault
-
-      - name: ls
-        run: ls -l
-
-      - uses: hoverkraft-tech/compose-action@v2.0.1
-        with:
-          compose-file: "./vault-docker/docker-compose.yml"
 
       - name: Run docker-compose
         run: docker-compose -f ./vault-docker/docker-compose.yml up -d
