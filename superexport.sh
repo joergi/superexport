@@ -100,6 +100,7 @@ secretname=$4-$secretname
 ###########################################################
 echo "hallo"
 export="export $1=\$(vault kv get -field=$2 \"$3\")"
+echo "xport ist: $export"
 export+="\n"
 
 if [[ "$(uname)" == 'Darwin' ]]; then
@@ -131,6 +132,7 @@ if [ ! -f $superexportfolder/.exported.sh ]; then
 fi
 
 echo -e $export >> $superexportfolder/.exported.sh
+cat $superexportfolder/.exported.sh
 bash $superexportfolder/.exported.sh
 
 ####################################
