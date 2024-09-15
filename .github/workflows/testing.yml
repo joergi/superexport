@@ -63,9 +63,8 @@ jobs:
 #      - uses: docker-practice/actions-setup-docker@master
 #        timeout-minutes: 12
       - name: brew orbstack instead of docker
-        run: brew install orbstack
-      - name: docker test
         run: |
+          brew install orbstack
           echo $PATH
           docker info
 #      - run: |
