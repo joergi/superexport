@@ -59,21 +59,20 @@ jobs:
     runs-on: macos-12
     steps:
       - uses: actions/checkout@v4.1.7
-#      - name: test if docker is there
-#        run: |
-#          brew
-      - uses: docker-practice/actions-setup-docker@master
-        timeout-minutes: 12
-      - run: |
-          set -x
-          docker version
-          docker run --rm hello-world
-      - name: brew vault
-        run: brew install hashicorp/tap/vault
+
+#      - uses: docker-practice/actions-setup-docker@master
+#        timeout-minutes: 12
       - name: brew orbstack instead of docker
         run: brew install orbstack
       - name: docker test
         run: docker info
+#      - run: |
+#          set -x
+#          docker version
+#          docker run --rm hello-world
+#      - name: brew vault
+#        run: brew install hashicorp/tap/vault
+
 #      - name: Run docker-compose
 #        run: docker compose -f ./vault-docker/docker-compose.yml up -d
 
