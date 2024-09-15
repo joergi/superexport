@@ -69,6 +69,10 @@ jobs:
 #          docker run --rm hello-world
       - name: brew vault
         run: brew install hashicorp/tap/vault
+
+      - name: ls
+        run: ls -l
+
       - uses: hoverkraft-tech/compose-action@v2.0.1
         with:
           compose-file: "./vault-docker/docker-compose.yml"
