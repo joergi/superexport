@@ -65,7 +65,9 @@ jobs:
       - name: brew orbstack instead of docker
         run: brew install orbstack
       - name: docker test
-        run: docker info
+        run: |
+        echo $PATH
+        docker info
 #      - run: |
 #          set -x
 #          docker version
