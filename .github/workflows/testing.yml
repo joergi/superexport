@@ -86,3 +86,24 @@ jobs:
           vault login token=vault-plaintext-root-token
           echo "Passwort -"
           echo $(vault kv get -field=password "/my-secrets/dev")
+          
+          touch $HOME/.superexport/.exported.sh
+          chmod +x $HOME/.superexport/.exported.sh
+          chmod +x superexport.sh
+          ./superexport.sh MYKEY password /my-secrets/dev foo
+
+          echo "reading secrets from from secret tools"
+          source $HOME/.superexport/.secretreader.sh
+          echo "mykey is $MYKEY"
+          echo "GH_ENV=$MYKEY" >> $GITHUB_ENV
+      - name: check if the password is correct
+        run: |
+          CHECKVAR="${{ env.GH_ENV }}"
+          if [ "$CHECKVAR" = "test_password" ]; then
+            echo "password is correct"
+            exit 0
+          else
+            echo "password is wrong"
+            echo "password should be \"test_password\" but was $CHECKVAR"
+            exit 1
+          fi
