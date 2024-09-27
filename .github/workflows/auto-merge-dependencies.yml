@@ -9,8 +9,6 @@ jobs:
   enable-automerge:
     if: |
       contains(github.event.pull_request.labels.*.name, 'auto-merge')
-      && 
-        contains(github.event.pull_request.labels.*.name, 'dependencies')
       && (
         contains(github.event.pull_request.labels.*.name, 'minor')
         || contains(github.event.pull_request.labels.*.name, 'patch')
