@@ -9,8 +9,8 @@ updates:
     labels:
       - "dependencies"
       - "auto-merge"
-  - package-ecosystem: "docker"
-    directory: "/"
+  - package-ecosystem: docker
+    directory: "/vault-docker"
     schedule:
       interval: "daily"
       time: "04:00"
