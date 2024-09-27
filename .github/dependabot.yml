@@ -9,7 +9,7 @@ updates:
     labels:
       - "dependencies"
       - "auto-merge"
-  - package-ecosystem: "docker"
+  - package-ecosystem: docker
     directory: "/"
     schedule:
       interval: "daily"
