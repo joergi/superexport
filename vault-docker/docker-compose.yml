@@ -1,6 +1,6 @@
 services:
   vault-server:
-    image: hashicorp/vault:latest
+    image: index.docker.io/hashicorp/vault@sha256:678025b44c518590d149e14af4ae337d6e0567c16cb4f3bfd5bf4e67e381f327 # 1.12.7
     ports:
       - "8200:8200"
     environment:
