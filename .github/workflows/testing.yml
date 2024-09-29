@@ -60,11 +60,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.7
 
-      - uses: docker-practice/actions-setup-docker@master
+      - uses: douglascamata/setup-docker-macos-action@v1-alpha
         timeout-minutes: 12
 
       - run: |
-          set -x
           docker version
 
       - name: brew vault
@@ -84,7 +83,7 @@ jobs:
           vault status
           echo "login to vault"
           vault login token=vault-plaintext-root-token
-          echo "Passwort -"
+          echo "Passwort is: (next line)"
           echo $(vault kv get -field=password "/my-secrets/dev")
           mkdir $HOME/.superexport
           touch $HOME/.superexport/.exported.sh
