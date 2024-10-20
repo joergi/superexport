@@ -65,6 +65,8 @@ jobs:
 
       - run: |
           docker version
+      - name: run Docker hello-world
+        run: docker run hello-world
 
       - name: brew vault
         run: brew install hashicorp/tap/vault
