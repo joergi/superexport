@@ -5,56 +5,56 @@ on:
   workflow_dispatch: {}
 
 jobs:
-#  bash-linux:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v4
-#      - name: install vault-cli
-#        run: |
-#          sudo apt-get update && sudo apt-get install gpg wget gnome-keyring dbus-x11 libsecret-tools
-#          wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-#          gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint
-#          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-#          sudo apt-get update && sudo apt-get install vault
-#
-#      - name: Run docker-compose
-#        run: docker compose -f ./vault-docker/docker-compose.yml up -d
-#
-#      - name: verifying vault
-#        run: |
-#          echo "Waiting for Vault to start..."
-#          sleep 30
-#          docker ps
-#          echo "docker images"
-#          export $(dbus-launch)
-#          eval "$(echo '\n' | gnome-keyring-daemon --unlock)"
-#          export VAULT_ADDR=http://127.0.0.1:8200
-#          echo "vault status"
-#          vault status
-#          echo "login to vault"
-#          vault login token=vault-plaintext-root-token
-#          mkdir $HOME/.superexport
-#
-#          touch $HOME/.superexport/.exported.sh
-#          chmod +x $HOME/.superexport/.exported.sh
-#          chmod +x superexport.sh
-#          ./superexport.sh MYKEY password /my-secrets/dev foo
-#
-#          echo "reading secrets from from secret tools"
-#          source $HOME/.superexport/.secretreader.sh
-#          echo "mykey is $MYKEY"
-#          echo "GH_ENV=$MYKEY" >> $GITHUB_ENV
-#      - name: check if the password is correct
-#        run: |
-#          CHECKVAR="${{ env.GH_ENV }}"
-#          if [ "$CHECKVAR" = "test_password" ]; then
-#            echo "password is correct"
-#            exit 0
-#          else
-#            echo "password is wrong"
-#            echo "password should be \"test_password\" but was $CHECKVAR"
-#            exit 1
-#          fi
+  bash-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: install vault-cli
+        run: |
+          sudo apt-get update && sudo apt-get install gpg wget gnome-keyring dbus-x11 libsecret-tools
+          wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+          gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+          sudo apt-get update && sudo apt-get install vault
+
+      - name: Run docker-compose
+        run: docker compose -f ./vault-docker/docker-compose.yml up -d
+
+      - name: verifying vault
+        run: |
+          echo "Waiting for Vault to start..."
+          sleep 30
+          docker ps
+          echo "docker images"
+          export $(dbus-launch)
+          eval "$(echo '\n' | gnome-keyring-daemon --unlock)"
+          export VAULT_ADDR=http://127.0.0.1:8200
+          echo "vault status"
+          vault status
+          echo "login to vault"
+          vault login token=vault-plaintext-root-token
+          mkdir $HOME/.superexport
+
+          touch $HOME/.superexport/.exported.sh
+          chmod +x $HOME/.superexport/.exported.sh
+          chmod +x superexport.sh
+          ./superexport.sh MYKEY password /my-secrets/dev foo
+
+          echo "reading secrets from from secret tools"
+          source $HOME/.superexport/.secretreader.sh
+          echo "mykey is $MYKEY"
+          echo "GH_ENV=$MYKEY" >> $GITHUB_ENV
+      - name: check if the password is correct
+        run: |
+          CHECKVAR="${{ env.GH_ENV }}"
+          if [ "$CHECKVAR" = "test_password" ]; then
+            echo "password is correct"
+            exit 0
+          else
+            echo "password is wrong"
+            echo "password should be \"test_password\" but was $CHECKVAR"
+            exit 1
+          fi
   mac:
     runs-on: macos-13
     steps:

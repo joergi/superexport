@@ -105,11 +105,10 @@ export+="\n"
 
 if [[ "$(uname)" == 'Darwin' ]]; then
   if security find-generic-password -a "$USER" -s $secretname -w >/dev/null 2>&1; then
-    echo "mac 1"
-    export+="echo \$$1 | security delete-generic-password -a \"$USER\" -s $secretname >/dev/null 2>&1"
+    security delete-generic-password -a "$USER" -s $secretname >/dev/null 2>&1
   fi
-  echo "after mac1"
-  export+="echo \$$1 | security add-generic-password -a \"$USER\" -s $secretname -w \"$secretname\""
+  vault_value=$(vault kv get -field=$2 "$3")
+  security add-generic-password -a "$USER" -s $secretname -w "$vault_value"
 elif [[ "$(uname)" == 'Linux' ]]; then
   echo "linux"
   export+="echo \$$1 | secret-tool store --label=\"\$USER $secretname\" \$USER $secretname"
@@ -146,11 +145,10 @@ fi
 
 if [[ "$(uname)" == 'Darwin' ]]; then
   echo "mac unten"
-  secretreader="export $1=\$(launchctl setenv \$secretname \"$secretname\")"
+  secretreader="launchctl setenv $secretname \$(vault kv get -field=$2 \"$3\")"
 elif [[ "$(uname)" == 'Linux' ]]; then
   echo "linux unten"
   secretreader="export $1=\$(secret-tool lookup \$USER $secretname)"
 fi
 
 echo -e $secretreader >> $superexportfolder/.secretreader.sh
-
