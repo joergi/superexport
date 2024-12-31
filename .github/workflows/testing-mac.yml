@@ -17,7 +17,6 @@ jobs:
           echo "exporting vault addr"
           export VAULT_ADDR=http://127.0.0.1:8200
           echo "starting sevrer in dev mode with token id vault-plaintext-root-token"
-#          nohup vault server -dev -dev-root-token-id="your-custom-root-token" &
           vault server -dev -dev-root-token-id="vault-plaintext-root-token" &
           sleep 20
           echo "Authenticating to vault..."
