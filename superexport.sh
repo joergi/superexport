@@ -168,7 +168,7 @@ secretreader=""
 
 mac_reading_passwords_out_of_secrets(){
     echo "start mac_reading_passwords_out_of_secrets"
-    secretreader="export $secretname \$(vault kv get -field=$2 \"$3\")"
+    secretreader="export $secretname=\$(vault kv get -field=$2 \"$3\")"
     echo "end mac_reading_passwords_out_of_secrets"
 }
 
