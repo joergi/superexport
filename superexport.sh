@@ -122,10 +122,9 @@ linux_write_secret_into_foo(){
 }
 
 if [[ "$(uname)" == 'Darwin' ]]; then
-  mac_write_secret_into_foo
-
+  mac_write_secret_into_foo "$secretname"
 elif [[ "$(uname)" == 'Linux' ]]; then
-  linux_write_secret_into_foo
+  linux_write_secret_into_foo "$1" "$secretname"
 fi
 
 
