@@ -103,52 +103,93 @@ export="export $1=\$(vault kv get -field=$2 \"$3\")"
 echo "xport ist: $export"
 export+="\n"
 
-if [[ "$(uname)" == 'Darwin' ]]; then
-  if security find-generic-password -a "$USER" -s $secretname -w >/dev/null 2>&1; then
-    security delete-generic-password -a "$USER" -s $secretname >/dev/null 2>&1
+# shellcheck disable=SC2120
+mac_write_secret_into_foo(){
+  echo "start mac_write_secret_into_foo"
+  if security find-generic-password -a "$USER" -s "$secretname" -w >/dev/null 2>&1; then
+    security delete-generic-password -a "$USER" -s "$secretname" >/dev/null 2>&1
   fi
-  vault_value=$(vault kv get -field=$2 "$3")
-  security add-generic-password -a "$USER" -s $secretname -w "$vault_value"
-elif [[ "$(uname)" == 'Linux' ]]; then
-  echo "linux"
+  vault_value=$(vault kv get -field="$2" "$3")
+  security add-generic-password -a "$USER" -s "$secretname" -w "$vault_value"
+  echo "end mac_write_secret_into_foo"
+}
+
+# shellcheck disable=SC2120
+linux_write_secret_into_foo(){
+  echo "start linux_write_secret_into_foo"
   export+="echo \$$1 | secret-tool store --label=\"\$USER $secretname\" \$USER $secretname"
+  echo "end linux_write_secret_into_foo"
+}
+
+if [[ "$(uname)" == 'Darwin' ]]; then
+  mac_write_secret_into_foo
+
+elif [[ "$(uname)" == 'Linux' ]]; then
+  linux_write_secret_into_foo
 fi
-echo "after"
+
 
 export+="\n"
 
-###########################
-# write .exported.sh file #
-###########################
-if [ ! -f $superexportfolder/.exported.sh ]; then
- echo "#!/bin/bash" > $superexportfolder/.exported.sh
- echo "set -euo pipefail" >> $superexportfolder/.exported.sh
- echo "IFS=\$'\n\t'" >> $superexportfolder/.exported.sh
- newlines="\n"
- echo -e $newlines >> $superexportfolder/.exported.sh
+create_exported_sh_file(){
+  echo "start create_exported_sh_file"
+  if [ ! -f "$superexportfolder"/.exported.sh ]; then
+    echo "#!/bin/bash" > "$superexportfolder"/.exported.sh
+    echo "set -euo pipefail" >> "$superexportfolder"/.exported.sh
+    echo "IFS=\$'\n\t'" >> "$superexportfolder"/.exported.sh
+    newlines="\n"
+    echo -e $newlines >> "$superexportfolder"/.exported.sh
+    chmod +x "$superexportfolder"/.exported.sh
+  fi
+  echo "end create_exported_sh_file"
+  }
 
- chmod +x $superexportfolder/.exported.sh
-fi
 
-echo -e $export >> $superexportfolder/.exported.sh
-cat $superexportfolder/.exported.sh
-bash $superexportfolder/.exported.sh
+write_exported_sh_file(){
+  echo "start write_exported_sh_file"
+  echo -e $export >> "$superexportfolder"/.exported.sh
+  cat "$superexportfolder"/.exported.sh
+  bash "$superexportfolder"/.exported.sh
+  echo "end write_exported_sh_file"
+}
+
+create_exported_sh_file
+write_exported_sh_file
+
+create_secretreader_sh_file(){
+  echo "start create_secretreader_sh_file"
+  if [ ! -f $superexportfolder/.secretreader.sh ]; then
+    echo "#!/bin/bash" > $superexportfolder/.secretreader.sh
+    chmod +x $superexportfolder/.secretreader.sh
+  fi
+  echo "end create_secretreader_sh_file"
+}
+
+mac_reading_passwords_out_of_secrets(){
+    echo "start mac_reading_passwords_out_of_secrets"
+    secretreader="export $secretname \$(vault kv get -field=$2 \"$3\")"
+    echo "end mac_reading_passwords_out_of_secrets"
+}
+
+linux_reading_passwords_out_of_secrets(){
+  echo "start linux_reading_passwords_out_of_secrets"
+  secretreader="export $1=\$(secret-tool lookup \$USER $secretname)"
+  echo "end linux_reading_passwords_out_of_secrets"
+}
+
+create_secretreader_sh_file
+
 
 ####################################
 # reading passwords out of secrets #
 ####################################
-
-if [ ! -f $superexportfolder/.secretreader.sh ]; then
- echo "#!/bin/bash" > $superexportfolder/.secretreader.sh
- chmod +x $superexportfolder/.secretreader.sh
-fi
-
 if [[ "$(uname)" == 'Darwin' ]]; then
-  echo "mac unten"
-  secretreader="launchctl setenv $secretname \$(vault kv get -field=$2 \"$3\")"
+  mac_reading_passwords_out_of_secrets
 elif [[ "$(uname)" == 'Linux' ]]; then
-  echo "linux unten"
-  secretreader="export $1=\$(secret-tool lookup \$USER $secretname)"
+  linux_reading_passwords_out_of_secrets
 fi
 
+####################################
+# write secretreader
+####################################
 echo -e $secretreader >> $superexportfolder/.secretreader.sh
