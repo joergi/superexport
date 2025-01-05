@@ -84,15 +84,15 @@ fi
 ######################################################
 # check if superexportfolder exist, if not create it #
 # ####################################################
-if [ ! -d $superexportfolder ]; then
- mkdir $superexportfolder
+if [ ! -d "$superexportfolder" ]; then
+ mkdir "$superexportfolder"
 fi
 
 #######################################################
 # set the secretname to lowercase and put a prefix on #
 #######################################################
 ## todo check if $4 is set or not
-secretname=$(echo $1 | tr '[:upper:]' '[:lower:]')
+secretname=$(echo "$1" | tr '[:upper:]' '[:lower:]')
 secretname=$4-$secretname
 
 ###########################################################

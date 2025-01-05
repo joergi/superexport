@@ -5,7 +5,7 @@ on:
   workflow_dispatch: {}
 
 jobs:
-  bash-linux:
+  testing_superexport_on_bash-linux:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
