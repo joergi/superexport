@@ -122,7 +122,7 @@ linux_write_secret_into_foo(){
 }
 
 if [[ "$(uname)" == 'Darwin' ]]; then
-  mac_write_secret_into_foo "$secretname"
+  mac_write_secret_into_foo "$secretname" "$2" "$3"
 elif [[ "$(uname)" == 'Linux' ]]; then
   linux_write_secret_into_foo "$1" "$secretname"
 fi
@@ -157,9 +157,9 @@ write_exported_sh_file
 
 create_secretreader_sh_file(){
   echo "start create_secretreader_sh_file"
-  if [ ! -f $superexportfolder/.secretreader.sh ]; then
-    echo "#!/bin/bash" > $superexportfolder/.secretreader.sh
-    chmod +x $superexportfolder/.secretreader.sh
+  if [ ! -f "$superexportfolder"/.secretreader.sh ]; then
+    echo "#!/bin/bash" > "$superexportfolder"/.secretreader.sh
+    chmod +x "$superexportfolder"/.secretreader.sh
   fi
   echo "end create_secretreader_sh_file"
 }
@@ -192,4 +192,4 @@ fi
 ####################################
 # write secretreader
 ####################################
-echo -e $secretreader >> $superexportfolder/.secretreader.sh
+echo -e "$secretreader" >> "$superexportfolder"/.secretreader.sh
