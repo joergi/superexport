@@ -40,14 +40,14 @@ jobs:
           chmod +x superexport.sh
           ./superexport.sh MYKEY password /my-secrets/dev foo
           
-          
-          echo "reading secrets from from secret tools"
-          source $HOME/.superexport/.secretreader.sh
           echo "***** echo secretreader"
           cat $HOME/.superexport/.secretreader.sh
           echo " ------------- "
           echo "***** echo exported"
           cat $HOME/.superexport/.exported.sh
+          
+          echo "reading secrets from from secret tools"
+          source $HOME/.superexport/.secretreader.sh
           echo "mykey is $MYKEY"
           echo "GH_ENV=$MYKEY" >> $GITHUB_ENV
           
