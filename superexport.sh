@@ -168,6 +168,8 @@ secretreader=""
 
 mac_reading_passwords_out_of_secrets(){
     echo "start mac_reading_passwords_out_of_secrets"
+    echo "\$1 is $1"
+    echo "\$secretname is $secretname"
     secretreader="export $1=\$(security find-generic-password -a $USER -s $secretname -w)"
     echo "end mac_reading_passwords_out_of_secrets"
 }
