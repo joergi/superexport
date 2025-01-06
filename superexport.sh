@@ -92,35 +92,33 @@ fi
 # set the secretname to lowercase and put a prefix on #
 #######################################################
 ## todo check if $4 is set or not
-echo "xxxxxxxxxxx\$1 is $1"
-echo "xxxxxxxxxxx\$4 is $4"
+#echo "xxxxxxxxxxx\$1 is $1"
+#echo "xxxxxxxxxxx\$4 is $4"
 secretname=$(echo "$1" | tr '[:upper:]' '[:lower:]')
 secretname=$4-$secretname
-echo "xxxxxxxxxxx\$secretname is $secretname"
+#echo "xxxxxxxxxxx\$secretname is $secretname"
 ###########################################################
 # get variables out of vault and export it to the secrets #
 ###########################################################
-echo "hallo"
 export="export $1=\$(vault kv get -field=$2 \"$3\")"
-echo "xport ist: $export"
+
 export+="\n"
 
-# shellcheck disable=SC2120
+
 mac_write_secret_into_foo(){
-  echo "start mac_write_secret_into_foo"
+#  echo "start mac_write_secret_into_foo"
   if security find-generic-password -a "$USER" -s "$secretname" -w >/dev/null 2>&1; then
     security delete-generic-password -a "$USER" -s "$secretname" >/dev/null 2>&1
   fi
   vault_value=$(vault kv get -field="$2" "$3")
   security add-generic-password -a "$USER" -s "$secretname" -w "$vault_value"
-  echo "end mac_write_secret_into_foo"
+#  echo "end mac_write_secret_into_foo"
 }
 
-# shellcheck disable=SC2120
 linux_write_secret_into_foo(){
-  echo "start linux_write_secret_into_foo"
+#  echo "start linux_write_secret_into_foo"
   export+="echo \$$1 | secret-tool store --label=\"\$USER $secretname\" \$USER $secretname"
-  echo "end linux_write_secret_into_foo"
+#  echo "end linux_write_secret_into_foo"
 }
 
 if [[ "$(uname)" == 'Darwin' ]]; then
@@ -133,7 +131,7 @@ fi
 export+="\n"
 
 create_exported_sh_file(){
-  echo "start create_exported_sh_file"
+#  echo "start create_exported_sh_file"
   if [ ! -f "$superexportfolder"/.exported.sh ]; then
     echo "#!/bin/bash" > "$superexportfolder"/.exported.sh
     echo "set -euo pipefail" >> "$superexportfolder"/.exported.sh
@@ -142,44 +140,42 @@ create_exported_sh_file(){
     echo -e $newlines >> "$superexportfolder"/.exported.sh
     chmod +x "$superexportfolder"/.exported.sh
   fi
-  echo "end create_exported_sh_file"
+#  echo "end create_exported_sh_file"
   }
 
 
 write_exported_sh_file(){
-  echo "start write_exported_sh_file"
+#  echo "start write_exported_sh_file"
   echo -e $export >> "$superexportfolder"/.exported.sh
   cat "$superexportfolder"/.exported.sh
   bash "$superexportfolder"/.exported.sh
-  echo "end write_exported_sh_file"
+#  echo "end write_exported_sh_file"
 }
 
 create_exported_sh_file
 write_exported_sh_file
 
 create_secretreader_sh_file(){
-  echo "start create_secretreader_sh_file"
+#  echo "start create_secretreader_sh_file"
   if [ ! -f "$superexportfolder"/.secretreader.sh ]; then
     echo "#!/bin/bash" > "$superexportfolder"/.secretreader.sh
     chmod +x "$superexportfolder"/.secretreader.sh
   fi
-  echo "end create_secretreader_sh_file"
+#  echo "end create_secretreader_sh_file"
 }
 
 secretreader=""
 
 mac_reading_passwords_out_of_secrets(){
-    echo "start mac_reading_passwords_out_of_secrets"
-    echo "\$1 is $1"
-    echo "\$secretname is $secretname"
+#    echo "start mac_reading_passwords_out_of_secrets"
     secretreader="export $1=\$(security find-generic-password -a $USER -s $secretname -w)"
-    echo "end mac_reading_passwords_out_of_secrets"
+#    echo "end mac_reading_passwords_out_of_secrets"
 }
 
 linux_reading_passwords_out_of_secrets(){
-  echo "start linux_reading_passwords_out_of_secrets"
+#  echo "start linux_reading_passwords_out_of_secrets"
   secretreader="export $1=\$(secret-tool lookup \$USER $secretname)"
-  echo "end linux_reading_passwords_out_of_secrets"
+#  echo "end linux_reading_passwords_out_of_secrets"
 }
 
 create_secretreader_sh_file

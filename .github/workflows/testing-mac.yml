@@ -40,13 +40,6 @@ jobs:
           chmod +x superexport.sh
           ./superexport.sh MYKEY password /my-secrets/dev foo
           
-          echo "***** echo secretreader"
-          cat $HOME/.superexport/.secretreader.sh
-          echo " ------------- "
-          echo "***** echo exported"
-          cat $HOME/.superexport/.exported.sh
-          
-          echo "reading secrets from from secret tools"
           source $HOME/.superexport/.secretreader.sh
           echo "mykey is $MYKEY"
           echo "GH_ENV=$MYKEY" >> $GITHUB_ENV
@@ -63,45 +56,3 @@ jobs:
             echo "password should be \"test_password\" but was $CHECKVAR"
             exit 1
           fi
-
-
-
-#      - name: Run docker-compose
-#        run: docker-compose -f ./vault-docker/docker-compose.yml up -d
-
-#      - name: verifying vault
-#        run: |
-#          echo "Waiting for Vault to start..."
-#          sleep 30
-#          docker ps
-#          echo "docker images"
-#          export VAULT_ADDR=http://127.0.0.1:8200
-#          echo "vault status"
-#          echo $VAULT_ADDR
-#          vault status
-#          echo "login to vault"
-#          vault login token=vault-plaintext-root-token
-#          vault token lookup
-#          echo "Passwort is: (next line)"
-#          echo $(vault kv get -field=password "/my-secrets/dev")
-#          mkdir $HOME/.superexport
-#          touch $HOME/.superexport/.exported.sh
-#          chmod +x $HOME/.superexport/.exported.sh
-#          chmod +x superexport.sh
-#          ./superexport.sh MYKEY password /my-secrets/dev foo
-#
-#          echo "reading secrets from from secret tools"
-#          source $HOME/.superexport/.secretreader.sh
-#          echo "mykey is $MYKEY"
-#          echo "GH_ENV=$MYKEY" >> $GITHUB_ENV
-#      - name: check if the password is correct
-#        run: |
-#          CHECKVAR="${{ env.GH_ENV }}"
-#          if [ "$CHECKVAR" = "test_password" ]; then
-#            echo "password is correct"
-#            exit 0
-#          else
-#            echo "password is wrong"
-#            echo "password should be \"test_password\" but was $CHECKVAR"
-#            exit 1
-#          fi
