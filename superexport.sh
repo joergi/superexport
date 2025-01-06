@@ -92,9 +92,11 @@ fi
 # set the secretname to lowercase and put a prefix on #
 #######################################################
 ## todo check if $4 is set or not
+echo "xxxxxxxxxxx\$1 is $1"
+echo "xxxxxxxxxxx\$4 is $4"
 secretname=$(echo "$1" | tr '[:upper:]' '[:lower:]')
 secretname=$4-$secretname
-
+echo "xxxxxxxxxxx\$secretname is $secretname"
 ###########################################################
 # get variables out of vault and export it to the secrets #
 ###########################################################
