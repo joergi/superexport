@@ -1,7 +1,7 @@
 name: MAC - Read secrets from vault
 on:
   push:
-    branches: [ main, mac ]
+    branches: [ main ]
   workflow_dispatch: {}
 
 jobs:
