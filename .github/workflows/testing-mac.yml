@@ -1,0 +1,58 @@
+name: MAC - Read secrets from vault
+on:
+  push:
+    branches: [ main, mac ]
+  workflow_dispatch: {}
+
+jobs:
+  testing_superexport_on_mac:
+    runs-on: macos-13
+    steps:
+      - uses: actions/checkout@v4.1.7
+
+      - name: brew vault
+        run: |
+          brew tap hashicorp/tap
+          brew install hashicorp/tap/vault
+          echo "exporting vault addr"
+          export VAULT_ADDR=http://127.0.0.1:8200
+          echo "starting sevrer in dev mode with token id vault-plaintext-root-token"
+          vault server -dev -dev-root-token-id="vault-plaintext-root-token" &
+          sleep 20
+          echo "Authenticating to vault..."
+          vault login token=vault-plaintext-root-token
+          echo "Initializing vault..."
+          vault secrets enable -version=1 -path=my-secrets kv
+          echo "Adding entries..."
+          vault kv put my-secrets/dev password=test_password
+          echo "Complete..."
+          vault token lookup
+          echo "Passwort is: (next line)"
+          echo $(vault kv get -field=password "/my-secrets/dev")
+          
+          # ---------------------------------
+          echo "set up done"
+          
+          mkdir $HOME/.superexport
+
+          touch $HOME/.superexport/.exported.sh
+          chmod +x $HOME/.superexport/.exported.sh
+          chmod +x superexport.sh
+          ./superexport.sh MYKEY password /my-secrets/dev foo
+          
+          source $HOME/.superexport/.secretreader.sh
+          echo "mykey is $MYKEY"
+          echo "GH_ENV=$MYKEY" >> $GITHUB_ENV
+          
+
+      - name: check if the password is correct
+        run: |
+          CHECKVAR="${{ env.GH_ENV }}"
+          if [ "$CHECKVAR" = "test_password" ]; then
+            echo "password is correct"
+            exit 0
+          else
+            echo "password is wrong"
+            echo "password should be \"test_password\" but was $CHECKVAR"
+            exit 1
+          fi
