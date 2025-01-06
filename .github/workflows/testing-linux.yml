@@ -1,7 +1,7 @@
 name: Linux - Read secrets from vault
 on:
   push:
-    branches: [ main ]
+    branches: [ main, mac]
   workflow_dispatch: {}
 
 jobs:
