@@ -188,9 +188,9 @@ create_secretreader_sh_file
 # reading passwords out of secrets #
 ####################################
 if [[ "$(uname)" == 'Darwin' ]]; then
-  mac_reading_passwords_out_of_secrets $secretreader $secretname $2 $3
+  mac_reading_passwords_out_of_secrets "$1" "$secretname" "$2" "$3"
 elif [[ "$(uname)" == 'Linux' ]]; then
-  linux_reading_passwords_out_of_secrets $secretreader $1 $secretname
+  linux_reading_passwords_out_of_secrets "$1" "$secretname"
 fi
 
 ####################################
